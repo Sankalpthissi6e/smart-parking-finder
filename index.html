@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartPark — AI Parking Navigator</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <div class="scanline-overlay"></div>
+
+  <header>
+    <div class="logo">⬡ SMARTPARK</div>
+    <div class="header-stats">
+      <span class="stat-pill" id="free-count">── FREE SLOTS</span>
+      <span class="stat-pill" id="algo-label">BFS MODE</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="controls-panel">
+      <div class="panel-title">MISSION CONTROL</div>
+
+      <div class="control-group">
+        <label>GRID SIZE</label>
+        <div class="slider-row">
+          <input type="range" id="grid-size" min="5" max="15" value="10" />
+          <span class="slider-val" id="grid-size-val">10×10</span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>OCCUPANCY %</label>
+        <div class="slider-row">
+          <input type="range" id="occupancy" min="10" max="70" value="35" />
+          <span class="slider-val" id="occupancy-val">35%</span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>VIP SLOTS</label>
+        <div class="slider-row">
+          <input type="range" id="vip-count" min="0" max="8" value="3" />
+          <span class="slider-val" id="vip-val">3 VIP</span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>ALGORITHM</label>
+        <div class="algo-toggle">
+          <button class="algo-btn active" id="btn-bfs" onclick="setAlgo('bfs')">BFS</button>
+          <button class="algo-btn" id="btn-dijkstra" onclick="setAlgo('dijkstra')">DIJKSTRA</button>
+        </div>
+      </div>
+
+      <button class="generate-btn" onclick="generateGrid()">⟳ GENERATE MAP</button>
+
+      <div class="legend">
+        <div class="legend-item"><span class="leg-box free"></span> Free</div>
+        <div class="legend-item"><span class="leg-box occupied"></span> Occupied</div>
+        <div class="legend-item"><span class="leg-box vip"></span> VIP</div>
+        <div class="legend-item"><span class="leg-box user"></span> You</div>
+        <div class="legend-item"><span class="leg-box path"></span> Path</div>
+        <div class="legend-item"><span class="leg-box target"></span> Target</div>
+      </div>
+    </section>
+
+    <section class="grid-panel">
+      <div class="grid-header">
+        <span class="grid-label">PARKING LOT — CLICK TO SET POSITION</span>
+        <span class="coords-display" id="coords-display">SELECT START</span>
+      </div>
+      <div class="grid-wrapper">
+        <div id="parking-grid" class="parking-grid"></div>
+      </div>
+    </section>
+
+    <section class="results-panel">
+      <div class="panel-title">NAVIGATION LOG</div>
+      <div id="result-output" class="result-output">
+        <div class="result-idle">
+          <div class="idle-icon">◎</div>
+          <div>Generate a map and<br/>click your position</div>
+        </div>
+      </div>
+      <div class="step-controls" id="step-controls" style="display:none">
+        <button onclick="stepBack()" id="btn-prev">◀ PREV</button>
+        <span id="step-counter">0 / 0</span>
+        <button onclick="stepForward()" id="btn-next">NEXT ▶</button>
+        <button onclick="autoPlay()" id="btn-auto">▶▶ AUTO</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="algorithms.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
